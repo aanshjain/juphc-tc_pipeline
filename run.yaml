@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: tax-calculator-run
+spec:
+  pipelineRef:
+    name: tax-calculator-pipeline
+
+  workspaces:
+    - name: shared-workspace
+      emptyDir: {}
+
+  params:
+    - name: repo-url
+      value: https://github.com/aanshjain/juphc-tc_pipeline
