@@ -30,3 +30,18 @@ spec:
         set -e
         npm install
         npx jasmine
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: build-image
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: build
+      image: node:20-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        echo "Building application"
