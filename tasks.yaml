@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: npm-install
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: npm-install
+      image: node:20-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        set -e
+        npm install
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: jasmine-test
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: jasmine-test
+      image: node:20-alpine
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        set -e
+        npm install
+        npx jasmine

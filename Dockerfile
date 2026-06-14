@@ -1,9 +1,13 @@
-FROM node:hydrogen-buster
-COPY graphserver.js .
-COPY package.json .
-COPY UScities.json .
-RUN npm install &&\
-    apk update &&\
-    apk upgrade
-EXPOSE  4000
-CMD node graphserver.js
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install --omit=dev
+
+COPY graphserver.js ./
+COPY UScities.json ./
+
+EXPOSE 4000
+
+CMD ["node", "graphserver.js"]

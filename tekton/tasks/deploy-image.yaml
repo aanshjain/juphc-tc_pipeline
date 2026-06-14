@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: deploy-image
+spec:
+  params:
+    - name: IMAGE
+      type: string
+    - name: APP_NAME
+      type: string
+      default: tax-calculator
+  steps:
+    - name: deploy
+      image: icr.io/continuous-delivery/pipeline/pipeline-base-image:2.56
+      script: |
+        #!/usr/bin/env bash
+        set -euo pipefail
+        ibmcloud cf push "$(params.APP_NAME)" --docker-image "$(params.IMAGE)"
