@@ -20,3 +20,11 @@ spec:
       workspaces:
         - name: source
           workspace: shared-workspace
+  - name: build-image
+    runAfter:
+      - jasmine-test
+    taskRef:
+      name: build-image
+    workspaces:
+      - name: source
+        workspace: shared-workspace
